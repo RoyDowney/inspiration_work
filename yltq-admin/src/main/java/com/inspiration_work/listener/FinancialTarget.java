@@ -6,9 +6,7 @@ import com.inspiration_work.model.NewAppDic;
 import com.inspiration_work.model.vo.FinancialTargetDataVo;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 

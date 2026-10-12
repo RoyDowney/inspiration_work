@@ -17,12 +17,12 @@
 
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <spring-boot.version>2.6.11</spring-boot.version>
-        <spring-cloud.version>2021.0.4</spring-cloud.version>
-        <spring-dloud-alibaba.version>2021.0.4.0</spring-dloud-alibaba.version>
+        <spring-boot.version>3.5.14</spring-boot.version>
+        <spring-cloud.version>2025.0.2</spring-cloud.version>
+        <spring-dloud-alibaba.version>2025.0.0.0</spring-dloud-alibaba.version>
         <lombok.version>1.18.10</lombok.version>
         <log4j.version>1.2.17</log4j.version>
         <mysql.version>8.0.29</mysql.version>
@@ -36,17 +36,20 @@
         <commons-collections.version>3.2.2</commons-collections.version>
         <fastjson.version>2.0.12</fastjson.version>
         <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
-        <lombok.version>1.18.24</lombok.version>
+        <lombok.version>1.18.46</lombok.version>
         <hutool.core.version>5.8.20</hutool.core.version>
         <hutool.all.version>5.8.20</hutool.all.version>
         <bootstrap.version>3.0.1</bootstrap.version>
-        <swagger.version>1.6.2</swagger.version>
         <spring-web.version>5.3.30</spring-web.version>
         <easyexcel.version>2.2.5</easyexcel.version>
         <poi.version>4.1.2</poi.version>
         <poi-ooxml-schemas.version>4.1.2</poi-ooxml-schemas.version>
         <poi-ooxml.version>4.1.2</poi-ooxml.version>
         <poi-scratchpad.version>4.1.2</poi-scratchpad.version>
+        <swagger.version>1.6.2</swagger.version>
+        <swagger-annotations.version>2.1.13</swagger-annotations.version>
+        <mocapi-serve.version>0.17.0</mocapi-serve.version>
+        <jsonutils.version>0.0.2</jsonutils.version>
     </properties>
 
     <!--  总项目用dependencyManagement来管理，子项目不用管理版本了，可以直接引用 子模块继承之后，提供作用：锁定版本+子module不用写groupId和version -->
@@ -199,11 +202,6 @@
                 <version>${easyexcel.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>io.swagger</groupId>
-                <artifactId>swagger-annotations</artifactId>
-                <version>${swagger.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -240,6 +238,27 @@
                 <artifactId>spring-boot-starter-data-redis</artifactId>
                 <version>${spring-boot.version}</version>
             </dependency>
+
+            <dependency>
+                <groupId>io.swagger</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.swagger.core.v3</groupId>
+                <artifactId>swagger-annotations</artifactId>
+                <version>${swagger-annotations.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.callibrity.mocapi</groupId>
+                <artifactId>mocapi-server</artifactId>
+                <version>${mocapi-serve.version}</version>
+                <scope>compile</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -253,7 +272,7 @@
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
-                    <release>8</release>
+                    <release>21</release>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
