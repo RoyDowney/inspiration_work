@@ -5,7 +5,7 @@ import com.inspiration_work.model.CuEnterpriseFinancialReportDetail;
 import com.inspiration_work.model.NewAppDic;
 import com.inspiration_work.model.vo.FinancialTargetDataVo;
 import org.springframework.stereotype.Component;
-
+import java.math.RoundingMode;
 import java.math.BigDecimal;
 import java.util.*;
 import java.util.stream.Collectors;
