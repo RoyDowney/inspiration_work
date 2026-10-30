@@ -5,6 +5,7 @@ import dev.langchain4j.model.chat.StreamingChatModel;
 import dev.langchain4j.model.chat.listener.ChatModelListener;
 import jakarta.annotation.Resource;
 import lombok.Data;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,6 +19,7 @@ import java.util.List;
  * 与 starter 自动配置同名 Bean 时依赖 {@code spring.main.allow-bean-definition-overriding=true}，本配置优先（{@link Primary}）。
  */
 @Configuration
+@ConditionalOnProperty(prefix = "agent.qwen", name = "enabled", havingValue = "true")
 @ConfigurationProperties(prefix = "langchain4j.community.dashscope.streaming-chat-model")
 @Data
 public class QwenStreamingChatModelConfig {

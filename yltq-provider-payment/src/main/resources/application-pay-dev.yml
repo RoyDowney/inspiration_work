@@ -11,12 +11,10 @@ spring:
     name: paymentservice
 
   datasource:
-    type: com.alibaba.druid.pool.DruidDataSource
-    driverClassName: com.mysql.cj.jdbc.Driver
-    druid:
-      url: jdbc:mysql://localhost:3306/corruptprotoss?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-      username: root
-      password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${PAYMENT_DB_URL}
+    username: ${PAYMENT_DB_USERNAME}
+    password: ${PAYMENT_DB_PASSWORD}
 
   #mybatis:
   #配置mapper的扫描，找到所有的mapper:xml映射文件:
@@ -26,11 +24,11 @@ spring:
 mybatis-plus:
   # 不支持多包, 如有需要可在注解配置 或 提升扫包等级
   # 例如 com.**.**.mapper
-  mapperPackage: com.waves.**.mapper
+  mapperPackage: com.inspiration_work.web.mapper
   # 对应的 XML 文件位置
   mapperLocations: classpath*:mapper/**/*Mapper.xml
   # 实体扫描，多个package用逗号或者分号分隔
-  typeAliasesPackage: com.waves.**.domain
+  typeAliasesPackage: com.inspiration_work.web.domain
   # 启动时是否检查 MyBatis XML 文件的存在，默认不检查
   checkConfigLocation: false
   configuration:
@@ -71,5 +69,5 @@ logging:
   pattern:
     dateformat: MM-dd HH:mm:ss:SSS
   level:
-    com.waves: debug
+    com.inspiration_work: debug
     org.springframework: warn

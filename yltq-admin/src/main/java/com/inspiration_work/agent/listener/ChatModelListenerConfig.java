@@ -17,17 +17,17 @@ public class ChatModelListenerConfig {
         return new ChatModelListener() {
             @Override
             public void onRequest(ChatModelRequestContext requestContext) {
-                log.info("onRequest(): {}", requestContext.chatRequest());
+                log.debug("模型请求，消息数：{}", requestContext.chatRequest().messages().size());
             }
 
             @Override
             public void onResponse(ChatModelResponseContext responseContext) {
-                log.info("onResponse(): {}", responseContext.chatResponse());
+                log.debug("模型响应完成");
             }
 
             @Override
             public void onError(ChatModelErrorContext errorContext) {
-                log.info("onError(): {}", errorContext.error().getMessage());
+                log.warn("模型调用失败：{}", errorContext.error().getClass().getSimpleName());
             }
         };
     }

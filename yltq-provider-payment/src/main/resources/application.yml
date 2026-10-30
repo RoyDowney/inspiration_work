@@ -1,0 +1,12 @@
+spring:
+  profiles:
+    default: pay-dev
+
+security:
+  jwt:
+    issuer: ${SECURITY_ISSUER_URI}
+    jwk-set-uri: ${SECURITY_JWKS_URI}
+    audience: ${SECURITY_AUDIENCE}
+    roles-claim: ${SECURITY_ROLES_CLAIM:roles}
+  roles:
+    payment-delete: ${SECURITY_PAYMENT_DELETE_ROLE:PAYMENT_DELETE}

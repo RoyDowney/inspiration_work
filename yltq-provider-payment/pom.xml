@@ -17,17 +17,22 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.corruptprotoss</groupId>
+            <artifactId>yltq-security</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
         <!-- 内嵌web服务器（tomcat），不引入就需要引入spring-boot-starter-tomcat，否则项目会启动后自动关闭 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <!-- 引入公共核心模块 -->
         <dependency>
-            <groupId>com.corruptprotoss</groupId>
-            <artifactId>yltq-common-core</artifactId>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
@@ -38,5 +43,23 @@
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
 </project>

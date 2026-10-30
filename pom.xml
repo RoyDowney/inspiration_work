@@ -13,10 +13,13 @@
         <module>yltq-common-core</module>
         <module>yltq-provider-payment</module>
         <module>yltq-admin</module>
+        <module>yltq-security</module>
+        <module>yltq-gateway</module>
     </modules>
 
 
     <properties>
+        <java.version>21</java.version>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -24,24 +27,16 @@
         <spring-cloud.version>2025.0.2</spring-cloud.version>
         <spring-dloud-alibaba.version>2025.0.0.0</spring-dloud-alibaba.version>
         <lombok.version>1.18.10</lombok.version>
-        <log4j.version>1.2.17</log4j.version>
-        <mysql.version>8.0.29</mysql.version>
-        <druid.version>1.2.11</druid.version>
-        <mybatisPlus.spring.boot.version>3.5.3</mybatisPlus.spring.boot.version>
+        <mybatisPlus.spring.boot.version>3.5.10.1</mybatisPlus.spring.boot.version>
         <amqp.version>2.3.9.RELEASE</amqp.version>
         <junit.version>4.12</junit.version>
-        <test-version>2.3.9.RELEASE</test-version>
         <jackson-version>2.11.4</jackson-version>
-        <aop.version>2.4.5</aop.version>
-        <commons-collections.version>3.2.2</commons-collections.version>
         <fastjson.version>2.0.12</fastjson.version>
-        <pagehelper.boot.version>1.4.3</pagehelper.boot.version>
         <lombok.version>1.18.46</lombok.version>
         <hutool.core.version>5.8.20</hutool.core.version>
         <hutool.all.version>5.8.20</hutool.all.version>
         <bootstrap.version>3.0.1</bootstrap.version>
-        <spring-web.version>5.3.30</spring-web.version>
-        <easyexcel.version>2.2.5</easyexcel.version>
+        <easyexcel.version>3.3.4</easyexcel.version>
         <poi.version>4.1.2</poi.version>
         <poi-ooxml-schemas.version>4.1.2</poi-ooxml-schemas.version>
         <poi-ooxml.version>4.1.2</poi-ooxml.version>
@@ -91,25 +86,15 @@
                 <version>${lombok.version}</version>
             </dependency>
 
-            <!--mysql-->
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>${mysql.version}</version>
-                <scope>runtime</scope>
-            </dependency>
-
-            <!-- druid-->
-            <dependency>
-                <groupId>com.alibaba</groupId>
-                <artifactId>druid-spring-boot-starter</artifactId>
-                <version>${druid.version}</version>
-            </dependency>
-
             <!-- MybatisPlus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
-                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <artifactId>mybatis-plus-spring-boot3-starter</artifactId>
+                <version>${mybatisPlus.spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-jsqlparser</artifactId>
                 <version>${mybatisPlus.spring.boot.version}</version>
             </dependency>
 
@@ -119,46 +104,11 @@
                 <artifactId>junit</artifactId>
                 <version>${junit.version}</version>
             </dependency>
-            <!--log4j-->
-            <dependency>
-                <groupId>log4j</groupId>
-                <artifactId>log4j</artifactId>
-                <version>${log4j.version}</version>
-            </dependency>
-
-            <!--单元测试-->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-test</artifactId>
-                <version>${test-version}</version>
-            </dependency>
-
-            <!-- Collection 增强Java集合框架 -->
-            <dependency>
-                <groupId>commons-collections</groupId>
-                <artifactId>commons-collections</artifactId>
-                <version>${commons-collections.version}</version>
-            </dependency>
-
             <!-- JSON 解析器和生成器 -->
             <dependency>
                 <groupId>com.alibaba.fastjson2</groupId>
                 <artifactId>fastjson2</artifactId>
                 <version>${fastjson.version}</version>
-            </dependency>
-
-            <!-- pagehelper 分页插件 -->
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pagehelper.boot.version}</version>
-            </dependency>
-
-            <!-- Spring boot aop 拦截器 -->
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-aop</artifactId>
-                <version>${aop.version}</version>
             </dependency>
 
             <!-- https://mvnrepository.com/artifact/cn.hutool/hutool-core -->
@@ -203,12 +153,6 @@
                 <version>${easyexcel.version}</version>
             </dependency>
 
-
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${spring-web.version}</version>
-            </dependency>
 
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -285,6 +229,11 @@
                     <release>21</release>
                     <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.2.5</version>
             </plugin>
         </plugins>
         <pluginManagement>

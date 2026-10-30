@@ -62,7 +62,7 @@ public class MinMaxServiceImpl implements MinMaxService {
             try {
                 return StrUtil.nullToEmpty(client.chatCompletionSync(systemPrompt, userMessage.trim()));
             } catch (Exception e) {
-                log.warn("[MinMaxServiceImpl][chat][official] fail", e);
+                log.warn("[MinMaxServiceImpl][chat][official] fail: {}", e.getClass().getSimpleName());
                 throw new Exception(AGENT_MINIMAX_CHAT_FAIL);
             }
         }
@@ -80,7 +80,7 @@ public class MinMaxServiceImpl implements MinMaxService {
             String text = model.chat(request).aiMessage().text();
             return StrUtil.nullToEmpty(text);
         } catch (Exception e) {
-            log.warn("[MinMaxServiceImpl][chat][openai] fail", e);
+            log.warn("[MinMaxServiceImpl][chat][openai] fail: {}", e.getClass().getSimpleName());
             throw new Exception(AGENT_MINIMAX_HTML_INVALID);
         }
     }

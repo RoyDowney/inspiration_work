@@ -5,8 +5,8 @@ import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.enums.CellExtraTypeEnum;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.metadata.CellExtra;
-import com.alibaba.fastjson2.JSON;
 import com.inspiration_work.dto.ReportImportExcelAnalysisDto;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
@@ -25,26 +25,23 @@ public class ReportImportAnalysisListener  extends AnalysisEventListener<ReportI
 
     private static final int HEAD_ROW_NUM = 1;
 
+    @Getter
     private List<ReportImportExcelAnalysisDto> list = new ArrayList<>();
 
-    private List<CellExtra> cellExtraList = new ArrayList<>();
+    private final List<CellExtra> cellExtraList = new ArrayList<>();
 
     public ReportImportAnalysisListener() {}
-
-    public List<ReportImportExcelAnalysisDto> getList() {
-        return list;
-    }
 
     @Override
     public void invoke(ReportImportExcelAnalysisDto excelData, AnalysisContext analysisContext) {
         excelData.setRowIndex(++rowIndex); // 设置行号
-        log.info(" data -> {}", excelData);
+        log.debug("解析 Excel 第 {} 行", rowIndex);
         list.add(excelData);
     }
 
     @Override
     public void extra(CellExtra extra, AnalysisContext context) {
-        log.info(" extra -> {}", JSON.toJSONString(extra));
+        log.debug("解析 Excel 合并区域：起始行 {}，起始列 {}", extra.getFirstRowIndex(), extra.getFirstColumnIndex());
         CellExtraTypeEnum type = extra.getType();
         switch (type) {
             case MERGE: {
@@ -60,7 +57,7 @@ public class ReportImportAnalysisListener  extends AnalysisEventListener<ReportI
 
     @Override
     public void doAfterAllAnalysed(AnalysisContext analysisContext) {
-        log.info(" doAfterAllAnalysed");
+        log.info("Excel 解析完成：{} 行，{} 个合并区域", list.size(), cellExtraList.size());
         //读取完成 填充合并过的单元格
         if (cellExtraList != null && cellExtraList.size() > 0) {
             mergeExcelData(list, cellExtraList, HEAD_ROW_NUM);

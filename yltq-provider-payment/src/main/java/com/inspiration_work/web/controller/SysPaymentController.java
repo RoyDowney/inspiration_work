@@ -7,6 +7,7 @@ import com.inspiration_work.web.domain.ResponseResult;
 import com.inspiration_work.web.domain.SysPaymentType;
 import com.inspiration_work.web.service.ISysPaymentService;
 import jakarta.annotation.Resource;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,7 +59,7 @@ public class SysPaymentController {
      * @param payId
      * @return
      */
-    @GetMapping("/removeById/{payId}")
+    @DeleteMapping("/removeById/{payId}")
     public ResponseResult removeById(@PathVariable("payId") Long payId){
         return ResponseResult.success(paymentService.removeById(payId));
     }

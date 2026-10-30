@@ -1,0 +1,21 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /adminservice
+
+spring:
+  application:
+    name: adminservice
+
+security:
+  jwt:
+    issuer: ${SECURITY_ISSUER_URI}
+    jwk-set-uri: ${SECURITY_JWKS_URI}
+    audience: ${SECURITY_AUDIENCE}
+    roles-claim: ${SECURITY_ROLES_CLAIM:roles}
+  roles:
+    upload: ${SECURITY_UPLOAD_ROLE:ADMIN_UPLOAD}
+
+agent:
+  qwen:
+    enabled: ${QWEN_ENABLED:false}

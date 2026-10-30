@@ -78,7 +78,7 @@ public class MinimaxOfficialApiClient {
         String json = objectMapper.writeValueAsString(body);
         assertRequestBodyNotTooLarge(json);
         if (properties.isLogRequests()) {
-            log.info("[minimax-official][sync] request body={}", json);
+            log.debug("[minimax-official][sync] request bytes={}", json.getBytes(StandardCharsets.UTF_8).length);
         }
         HttpRequest.Builder rb = HttpRequest.newBuilder()
                 .uri(endpoint())
@@ -91,10 +91,10 @@ public class MinimaxOfficialApiClient {
         }
         HttpResponse<String> resp = httpClient().send(rb.build(), HttpResponse.BodyHandlers.ofString());
         if (properties.isLogResponses()) {
-            log.info("[minimax-official][sync] status={} body={}", resp.statusCode(), StrUtil.subPre(resp.body(), 2000));
+            log.debug("[minimax-official][sync] status={} response bytes={}", resp.statusCode(), resp.body().getBytes(StandardCharsets.UTF_8).length);
         }
         if (resp.statusCode() / 100 != 2) {
-            throw new IOException("MiniMax HTTP " + resp.statusCode() + ": " + StrUtil.subPre(resp.body(), 500));
+            throw new IOException("MiniMax HTTP " + resp.statusCode());
         }
         return parseSyncAssistantText(resp.body());
     }
@@ -108,7 +108,7 @@ public class MinimaxOfficialApiClient {
         String json = objectMapper.writeValueAsString(body);
         assertRequestBodyNotTooLarge(json);
         if (properties.isLogRequests()) {
-            log.info("[minimax-official][stream] request body={}", json);
+            log.debug("[minimax-official][stream] request bytes={}", json.getBytes(StandardCharsets.UTF_8).length);
         }
         HttpRequest.Builder rb = HttpRequest.newBuilder()
                 .uri(endpoint())
@@ -122,8 +122,8 @@ public class MinimaxOfficialApiClient {
         }
         HttpResponse<InputStream> resp = httpClient().send(rb.build(), HttpResponse.BodyHandlers.ofInputStream());
         if (resp.statusCode() / 100 != 2) {
-            String err = readAll(resp.body());
-            throw new IOException("MiniMax HTTP " + resp.statusCode() + ": " + StrUtil.subPre(err, 500));
+            resp.body().close();
+            throw new IOException("MiniMax HTTP " + resp.statusCode());
         }
         try (InputStream in = resp.body();
              BufferedReader reader = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
@@ -191,8 +191,7 @@ public class MinimaxOfficialApiClient {
         }
         int code = base.get("status_code").asInt();
         if (code != 0) {
-            String msg = base.has("status_msg") ? base.get("status_msg").asText() : "";
-            throw new IOException("MiniMax base_resp status_code=" + code + " " + msg);
+            throw new IOException("MiniMax base_resp status_code=" + code);
         }
     }
 
@@ -216,17 +215,6 @@ public class MinimaxOfficialApiClient {
             return content != null && !content.isNull() ? content.asText("") : "";
         }
         return "";
-    }
-
-    private static String readAll(InputStream in) throws IOException {
-        try (BufferedReader r = new BufferedReader(new InputStreamReader(in, StandardCharsets.UTF_8))) {
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = r.readLine()) != null) {
-                sb.append(line);
-            }
-            return sb.toString();
-        }
     }
 
     private static String trimTrailingSlash(String url) {
